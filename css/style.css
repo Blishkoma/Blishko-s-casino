@@ -106,7 +106,7 @@ body {
 .game-nav { display: flex; align-items: center; margin-bottom: 16px; gap: 16px; }
 .back-btn {
     background: var(--bg-panel); color: var(--text-muted);
-    border: none; padding: 8px 16px; border-radius: 6px; font-weight: bold;
+    border: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer;
 }
 .bet-controls { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
 .bet-input-wrap { display: flex; gap: 10px; }
@@ -118,7 +118,7 @@ body {
 .btn-large {
     background: var(--accent); color: #000; font-weight: 800; font-size: 1.1rem;
     border: none; border-radius: 6px; padding: 16px; width: 100%;
-    text-transform: uppercase;
+    text-transform: uppercase; cursor: pointer;
 }
 .btn-large:active { transform: scale(0.98); }
 .btn-row { display: flex; gap: 10px; }
@@ -126,7 +126,7 @@ body {
 .btn-stand { background: var(--danger); color: white; }
 .btn-double { background: #eab308; color: black; }
 
-/* BLACKJACK VERTICAL */
+/* BLACKJACK */
 .bj-container { display: flex; flex-direction: column; height: 75vh; }
 .bj-table {
     flex: 1; background: #0c1a14; border-radius: 8px; margin-bottom: 16px;
@@ -146,7 +146,7 @@ body {
 .card.hidden { background: #2563eb; }
 .bj-msg { text-align: center; font-size: 1.2rem; font-weight: bold; color: var(--accent); margin: 10px 0; min-height: 28px; }
 
-/* POULET VERTICAL */
+/* POULET (CROSSY) */
 .ck-container { display: flex; flex-direction: column; height: 75vh; }
 .ck-grid {
     flex: 1; background: #222; border-radius: 8px; margin-bottom: 16px;
@@ -155,7 +155,6 @@ body {
 .ck-lane { flex: 1; border-bottom: 2px dashed rgba(255,255,255,0.1); position: relative; }
 .ck-hud { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); padding: 5px 10px; border-radius: 4px; font-weight: bold; color: var(--accent); z-index: 10; }
 .ck-actor { position: absolute; font-size: 2rem; transform: translate(-50%, -50%); z-index: 5;}
-/* --- STYLES DES 10 NOUVEAUX JEUX --- */
 
 /* MINES & KENO */
 .grid-5x5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 16px; }
@@ -201,4 +200,3 @@ input[type=range] { width: 100%; margin: 15px 0; accent-color: var(--accent); }
 .plinko-path { font-size: 1.5rem; letter-spacing: 5px; color: white; min-height: 30px; }
 .plinko-buckets { display: flex; gap: 4px; }
 .plinko-bucket { background: #333; padding: 8px 4px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; text-align: center; width: 35px; }
-
