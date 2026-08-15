@@ -155,3 +155,50 @@ body {
 .ck-lane { flex: 1; border-bottom: 2px dashed rgba(255,255,255,0.1); position: relative; }
 .ck-hud { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); padding: 5px 10px; border-radius: 4px; font-weight: bold; color: var(--accent); z-index: 10; }
 .ck-actor { position: absolute; font-size: 2rem; transform: translate(-50%, -50%); z-index: 5;}
+/* --- STYLES DES 10 NOUVEAUX JEUX --- */
+
+/* MINES & KENO */
+.grid-5x5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 16px; }
+.grid-8x5 { display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px; margin-bottom: 16px; }
+.grid-btn { 
+    background: var(--bg-panel); border: 2px solid rgba(255,255,255,0.1); 
+    border-radius: 6px; aspect-ratio: 1; font-size: 1.5rem; 
+    display: flex; align-items: center; justify-content: center; cursor: pointer; color: white;
+}
+.grid-btn.active { background: #3b82f6; border-color: #60a5fa; }
+.grid-btn.revealed-safe { background: rgba(0, 231, 1, 0.2); border-color: var(--accent); }
+.grid-btn.revealed-mine { background: rgba(255, 68, 68, 0.2); border-color: var(--danger); }
+
+/* CRASH, DINO, LIMBO */
+.crash-display {
+    background: #0c1a14; height: 200px; border-radius: 8px; margin-bottom: 16px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    border: 2px solid var(--bg-panel); position: relative; overflow: hidden;
+}
+.crash-mult { font-size: 4rem; font-weight: 900; color: var(--text-main); text-shadow: 0 4px 10px rgba(0,0,0,0.5); z-index: 2;}
+.crash-mult.crashed { color: var(--danger); }
+.crash-mult.won { color: var(--accent); }
+
+/* DICE */
+.dice-slider-container { background: var(--bg-panel); padding: 20px; border-radius: 8px; margin-bottom: 16px; }
+.dice-stats { display: flex; justify-content: space-between; margin-bottom: 15px; font-weight: bold; color: var(--accent); }
+input[type=range] { width: 100%; margin: 15px 0; accent-color: var(--accent); }
+
+/* ROULETTE & BACCARAT */
+.table-game { background: #07381b; padding: 20px; border-radius: 8px; border: 4px solid #3f2a14; margin-bottom: 16px; text-align: center; }
+.roulette-bets { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+.r-btn { padding: 15px; font-weight: bold; border: none; border-radius: 6px; color: white; cursor: pointer; }
+.r-red { background: #dc2626; } .r-black { background: #171717; } .r-even { background: #2563eb; } .r-odd { background: #d97706; }
+.roulette-result { font-size: 3rem; font-weight: 900; margin: 10px 0; color: white; }
+
+/* HILO */
+.hilo-card-display { display: flex; justify-content: center; margin: 20px 0; }
+.hilo-card { background: white; color: black; font-size: 3rem; font-weight: bold; width: 100px; height: 140px; border-radius: 8px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+.hilo-stats { text-align: center; color: var(--accent); font-weight: bold; font-size: 1.2rem; margin-bottom: 10px; }
+
+/* PLINKO */
+.plinko-board { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 16px; padding: 20px 0; background: var(--bg-panel); border-radius: 8px; }
+.plinko-path { font-size: 1.5rem; letter-spacing: 5px; color: white; min-height: 30px; }
+.plinko-buckets { display: flex; gap: 4px; }
+.plinko-bucket { background: #333; padding: 8px 4px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; text-align: center; width: 35px; }
+
