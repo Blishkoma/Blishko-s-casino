@@ -4,7 +4,7 @@
 let state = {
     balance: 10.00,
     history: [10.00],
-    stats: { wagered: 0, biggestWin: 0 },
+    stats: { wagered: 0, biggestWin: 0, profits: {}, resets: 0 },
     chartObj: null,
     currentGame: null
 };
@@ -85,6 +85,19 @@ function goHome() {
     document.getElementById('home-view').style.display = 'block';
 }
 
+function resetApp() {
+    state.balance = 10.00;
+    state.history = [10.00];
+    state.stats.wagered = 0;
+    state.stats.biggestWin = 0;
+    state.stats.profits = {};
+    state.stats.resets += 1;
+    
+    document.getElementById('game-over-modal').style.display = 'none';
+    updateBalanceDisplay();
+    goHome();
+}
+
 /* =========================================
    GESTION FINANCIÈRE ET WALLET
 ========================================= */
@@ -95,13 +108,26 @@ function updateBalanceDisplay() {
 function processBet(wager, winAmount) {
     state.stats.wagered += wager;
     state.balance -= wager;
+    
+    let profit = winAmount - wager;
+    let gId = state.currentGame || 'inconnu';
+    if (!state.stats.profits[gId]) state.stats.profits[gId] = 0;
+    state.stats.profits[gId] += profit;
+
     if (winAmount > 0) {
         state.balance += winAmount;
-        let profit = winAmount - wager;
         if (profit > state.stats.biggestWin) state.stats.biggestWin = profit;
     }
+    
     state.history.push(state.balance);
     updateBalanceDisplay();
+    
+    // Vérification du Game Over (seuil stricte sous 0.01)
+    if (state.balance < 0.01) {
+        setTimeout(() => {
+            document.getElementById('game-over-modal').style.display = 'flex';
+        }, 500); // Petit délai pour laisser le joueur voir sa défaite
+    }
 }
 
 function toggleWallet(show) {
@@ -110,6 +136,38 @@ function toggleWallet(show) {
         document.getElementById('stat-balance').innerText = state.balance.toFixed(2) + ' €';
         document.getElementById('stat-wager').innerText = state.stats.wagered.toFixed(2) + ' €';
         document.getElementById('stat-biggest').innerText = state.stats.biggestWin.toFixed(2) + ' €';
+        document.getElementById('stat-resets').innerText = state.stats.resets;
+
+        // Calcul Meilleur / Pire Jeu
+        let bestGame = { id: null, profit: -Infinity };
+        let worstGame = { id: null, profit: Infinity };
+
+        for (let id in state.stats.profits) {
+            let p = state.stats.profits[id];
+            if (p > bestGame.profit) { bestGame.profit = p; bestGame.id = id; }
+            if (p < worstGame.profit) { worstGame.profit = p; worstGame.id = id; }
+        }
+
+        let getName = (id) => { let g = games.find(x => x.id === id); return g ? g.name : id; };
+
+        let bestEl = document.getElementById('stat-best');
+        if (bestGame.id && bestGame.profit > 0) {
+            bestEl.innerText = `🔥 ${getName(bestGame.id)} (+${bestGame.profit.toFixed(2)} €)`;
+            bestEl.style.color = 'var(--accent)';
+        } else {
+            bestEl.innerText = "-";
+            bestEl.style.color = 'var(--text-muted)';
+        }
+
+        let worstEl = document.getElementById('stat-worst');
+        if (worstGame.id && worstGame.profit < 0) {
+            worstEl.innerText = `📉 ${getName(worstGame.id)} (${worstGame.profit.toFixed(2)} €)`;
+            worstEl.style.color = 'var(--danger)';
+        } else {
+            worstEl.innerText = "-";
+            worstEl.style.color = 'var(--text-muted)';
+        }
+
         renderChart();
     }
 }
@@ -165,7 +223,7 @@ function renderBlackjack() {
         </div>
         <div class="bet-controls" id="bj-start-ctrl">
             <div class="bet-input-wrap">
-                <input type="number" id="bj-bet" class="bet-input" value="1.00" min="0.10" step="0.50">
+                <input type="number" id="bj-bet" class="bet-input" value="1.00" min="0.01" step="0.01">
             </div>
             <button class="btn-large" onclick="bjDeal()">Miser</button>
         </div>
@@ -285,7 +343,7 @@ function renderPoulet() {
         </div>
         <div class="bet-controls" id="ck-start-ctrl">
             <div class="bet-input-wrap">
-                <input type="number" id="ck-bet" class="bet-input" value="1.00" min="0.10" step="0.50">
+                <input type="number" id="ck-bet" class="bet-input" value="1.00" min="0.01" step="0.01">
             </div>
             <button class="btn-large" onclick="ckStart()">Jouer</button>
         </div>
@@ -402,7 +460,7 @@ function renderCrash(type = 'crash') {
         <div class="crash-mult" id="cr-mult">1.00x</div>
     </div>
     <div class="bet-controls" id="cr-start-ctrl">
-        <div class="bet-input-wrap"><input type="number" id="cr-bet" class="bet-input" value="1.00" min="0.10"></div>
+        <div class="bet-input-wrap"><input type="number" id="cr-bet" class="bet-input" value="1.00" min="0.01" step="0.01"></div>
         <button class="btn-large" onclick="crStart()">Parier</button>
     </div>
     <div class="bet-controls" id="cr-act-ctrl" style="display:none;">
@@ -453,7 +511,7 @@ function renderMines() {
     <div class="dice-stats"><span>Mult: <span id="mn-mult-txt">1.00</span>x</span><span>Mines: <input type="number" id="mn-count" value="3" min="1" max="24" style="width:50px; background:var(--bg-panel); color:white; border:none; text-align:center;"></span></div>
     <div class="grid-5x5" id="mn-grid">${gridHtml}</div>
     <div class="bet-controls" id="mn-start-ctrl">
-        <div class="bet-input-wrap"><input type="number" id="mn-bet" class="bet-input" value="1.00"></div>
+        <div class="bet-input-wrap"><input type="number" id="mn-bet" class="bet-input" value="1.00" min="0.01" step="0.01"></div>
         <button class="btn-large" onclick="mnStart()">Jouer</button>
     </div>
     <div class="bet-controls" id="mn-act-ctrl" style="display:none;">
@@ -535,7 +593,7 @@ function renderDice() {
         </div>
     </div>
     <div class="bet-controls">
-        <input type="number" id="di-bet" class="bet-input" value="1.00">
+        <input type="number" id="di-bet" class="bet-input" value="1.00" min="0.01" step="0.01">
         <button class="btn-large" onclick="diRoll()">Lancer les Dés</button>
     </div>`;
 }
@@ -586,7 +644,7 @@ function renderLimbo() {
     <div class="dice-stats"><span>Multiplicateur Cible :</span></div>
     <input type="number" id="lb-target" class="bet-input" value="2.00" min="1.01" step="0.50" style="margin-bottom:15px; width:100%;">
     <div class="bet-controls">
-        <input type="number" id="lb-bet" class="bet-input" value="1.00">
+        <input type="number" id="lb-bet" class="bet-input" value="1.00" min="0.01" step="0.01">
         <button class="btn-large" onclick="lbRoll()">Parier</button>
     </div>`;
 }
@@ -623,7 +681,7 @@ function renderRoulette() {
         </div>
     </div>
     <div class="bet-controls">
-        <input type="number" id="ro-bet" class="bet-input" value="1.00">
+        <input type="number" id="ro-bet" class="bet-input" value="1.00" min="0.01" step="0.01">
     </div>`;
 }
 function rouletteInit() {}
@@ -672,7 +730,7 @@ function renderBaccarat() {
             <button class="r-btn" style="background:#ef4444;" onclick="baPlay('B')">BANQUE (1.95x)</button>
         </div>
     </div>
-    <div class="bet-controls"><input type="number" id="ba-bet" class="bet-input" value="1.00"></div>`;
+    <div class="bet-controls"><input type="number" id="ba-bet" class="bet-input" value="1.00" min="0.01" step="0.01"></div>`;
 }
 function baccaratInit() {}
 function baVal(c) { let v = c%13; return v >= 10 ? 0 : v+1; }
@@ -721,7 +779,7 @@ function renderPlinko() {
         </div>
     </div>
     <div class="bet-controls">
-        <input type="number" id="pk-bet" class="bet-input" value="1.00">
+        <input type="number" id="pk-bet" class="bet-input" value="1.00" min="0.01" step="0.01">
         <button class="btn-large" id="pk-btn" onclick="pkDrop()">Lâcher la bille</button>
     </div>`;
 }
@@ -765,7 +823,7 @@ function renderHilo() {
     <div class="hilo-stats">Multiplicateur : <span id="hl-mult">1.00</span>x</div>
     <div class="hilo-card-display"><div class="hilo-card" id="hl-card">7</div></div>
     <div class="bet-controls" id="hl-start-ctrl">
-        <input type="number" id="hl-bet" class="bet-input" value="1.00">
+        <input type="number" id="hl-bet" class="bet-input" value="1.00" min="0.01" step="0.01">
         <button class="btn-large" onclick="hlStart()">Jouer</button>
     </div>
     <div class="bet-controls" id="hl-act-ctrl" style="display:none;">
@@ -822,7 +880,7 @@ function renderKeno() {
     <div class="dice-stats"><span>Sélectionnés : <span id="kn-count">0</span>/10</span></div>
     <div class="grid-8x5">${h}</div>
     <div class="bet-controls">
-        <input type="number" id="kn-bet" class="bet-input" value="1.00">
+        <input type="number" id="kn-bet" class="bet-input" value="1.00" min="0.01" step="0.01">
         <button class="btn-large" onclick="knPlay()">Tirer au sort</button>
     </div>`;
 }
