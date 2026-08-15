@@ -1,1 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Stake Hub</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header id="main-header">
+        <div class="logo">Stake</div>
+        <div class="balance"><span id="balance-amount">10.00</span> €</div>
+    </header>
+
+    <main id="app-container">
+        <!-- Vue Accueil : Liste des jeux -->
+        <div id="home-view">
+            <div class="games-list" id="games-list">
+                <!-- Les cartes sont générées dynamiquement via JS -->
+            </div>
+        </div>
+
+        <!-- Vue Jeu : Interface d'un jeu spécifique -->
+        <div id="game-view" style="display: none;">
+            <!-- L'en-tête et le canvas du jeu seront générés ici au clic -->
+        </div>
+    </main>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
 
