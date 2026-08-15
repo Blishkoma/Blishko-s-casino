@@ -1,1 +1,155 @@
+:root {
+    --bg-color: #0f172a;
+    --card-bg: #1e293b;
+    --accent-green: #00e701;
+    --text-main: #ffffff;
+    --text-muted: #94a3b8;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none; /* Désactive la sélection de texte pour un feeling app native */
+    -webkit-tap-highlight-color: transparent; /* Supprime le surlignage bleu natif sur mobile */
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    overflow-x: hidden; /* Blocage strict du scroll horizontal */
+    overflow-y: auto; /* Défilement vertical fluide */
+    min-height: 100vh;
+}
+
+/* --- HEADER FIXE --- */
+#main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 65px;
+    background-color: var(--bg-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.balance {
+    color: var(--accent-green);
+    font-weight: 700;
+    font-size: 1.1rem;
+    background: rgba(0, 231, 1, 0.1);
+    padding: 6px 14px;
+    border-radius: 8px;
+}
+
+/* --- CONTENEUR PRINCIPAL --- */
+#app-container {
+    margin-top: 65px; /* Compense le header fixe */
+    padding: 16px;
+    width: 100%;
+}
+
+/* --- LISTE DES JEUX (HOME) --- */
+.games-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-bottom: 30px;
+}
+
+/* Design des Cartes Premium */
+.game-card {
+    background: linear-gradient(145deg, var(--card-bg) 0%, #172033 100%);
+    border-radius: 14px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    /* Transition par défaut pour le relâchement du clic */
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+/* FEEDBACK TACTILE CRUCIAL */
+.game-card:active, .back-btn:active {
+    transform: scale(0.92);
+    transition: 0.05s;
+    background: #172033;
+}
+
+.game-icon {
+    font-size: 2.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 12px;
+    flex-shrink: 0;
+}
+
+.game-info h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.game-info p {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    line-height: 1.3;
+}
+
+/* --- VUE JEU (ROUTING) --- */
+#game-view {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.game-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.back-btn {
+    background: var(--card-bg);
+    color: var(--text-main);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+/* Conteneur temporaire en attendant les vrais jeux */
+.game-placeholder {
+    background: linear-gradient(145deg, var(--card-bg) 0%, #172033 100%);
+    border-radius: 14px;
+    height: 65vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    border: 2px dashed rgba(255, 255, 255, 0.05);
+    font-weight: 600;
+}
 
