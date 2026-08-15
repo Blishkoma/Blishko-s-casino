@@ -52,7 +52,28 @@
                     <span class="stat-label">Plus gros gain</span>
                     <span class="stat-value" id="stat-biggest">0.00 €</span>
                 </div>
+                <div class="stat-box">
+                    <span class="stat-label">Meilleur jeu</span>
+                    <span class="stat-value" id="stat-best">-</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Pire jeu</span>
+                    <span class="stat-value" id="stat-worst">-</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Parties recommencées</span>
+                    <span class="stat-value" id="stat-resets">0</span>
+                </div>
             </div>
+        </div>
+    </div>
+
+    <!-- MODALE GAME OVER -->
+    <div id="game-over-modal" style="display: none;">
+        <div class="game-over-content">
+            <h1>BANKRUPT</h1>
+            <p>Vous n'avez plus de fonds.</p>
+            <button class="btn-reset" onclick="resetApp()">RECOMMENCER</button>
         </div>
     </div>
 
