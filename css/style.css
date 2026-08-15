@@ -126,6 +126,34 @@ body {
 .btn-stand { background: var(--danger); color: white; }
 .btn-double { background: #eab308; color: black; }
 
+/* MODALE GAME OVER */
+#game-over-modal {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px);
+    z-index: 9999; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; text-align: center;
+}
+#game-over-modal h1 {
+    color: var(--danger); font-size: 3rem; margin-bottom: 10px;
+    text-shadow: 0 0 20px rgba(255, 68, 68, 0.5); font-weight: 900;
+}
+#game-over-modal p {
+    color: var(--text-muted); font-size: 1.2rem; margin-bottom: 40px;
+}
+.btn-reset {
+    background: var(--accent); color: #000;
+    font-size: 1.5rem; font-weight: 900;
+    padding: 20px 40px; border-radius: 12px; border: none;
+    cursor: pointer; text-transform: uppercase;
+    box-shadow: 0 0 30px rgba(0, 231, 1, 0.5);
+    animation: pulse 1.5s infinite;
+}
+@keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 20px rgba(0, 231, 1, 0.4); }
+    50% { transform: scale(1.05); box-shadow: 0 0 40px rgba(0, 231, 1, 0.8); }
+    100% { transform: scale(1); box-shadow: 0 0 20px rgba(0, 231, 1, 0.4); }
+}
+
 /* BLACKJACK */
 .bj-container { display: flex; flex-direction: column; height: 75vh; }
 .bj-table {
