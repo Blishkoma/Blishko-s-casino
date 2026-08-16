@@ -8,31 +8,26 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <!-- Header Fixe -->
+    <!-- HEADER -->
     <header id="main-header">
-        <div class="logo">Blishko's Casino</div>
+        <div class="logo">Blishko's <span>Casino</span></div>
         <button id="wallet-btn" class="balance-btn" onclick="toggleWallet(true)">
             <span id="balance-amount">10.00</span> €
         </button>
     </header>
 
-    <!-- Conteneur Principal -->
+    <!-- MAIN APP CONTAINER -->
     <main id="app-container">
-        <!-- VUE ACCUEIL -->
         <div id="home-view">
-            <div class="games-grid" id="games-list">
-                <!-- Généré en JS -->
-            </div>
+            <div class="games-grid" id="games-list"></div>
         </div>
-
-        <!-- VUE JEU -->
         <div id="game-view" style="display: none;"></div>
     </main>
 
-    <!-- VUE WALLET (OVERLAY PLEIN ÉCRAN) -->
+    <!-- WALLET OVERLAY -->
     <div id="wallet-view" class="overlay-view" style="display: none;">
         <div class="wallet-header">
-            <h2>Portefeuille</h2>
+            <h2>Portefeuille & Stats</h2>
             <button class="close-btn" onclick="toggleWallet(false)">✕</button>
         </div>
         <div class="wallet-content">
@@ -40,40 +35,22 @@
                 <canvas id="balanceChart"></canvas>
             </div>
             <div class="stats-container">
-                <div class="stat-box">
-                    <span class="stat-label">Solde actuel</span>
-                    <span class="stat-value" id="stat-balance">10.00 €</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-label">Mises totales</span>
-                    <span class="stat-value" id="stat-wager">0.00 €</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-label">Plus gros gain</span>
-                    <span class="stat-value" id="stat-biggest">0.00 €</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-label">Meilleur jeu</span>
-                    <span class="stat-value" id="stat-best">-</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-label">Pire jeu</span>
-                    <span class="stat-value" id="stat-worst">-</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-label">Parties recommencées</span>
-                    <span class="stat-value" id="stat-resets">0</span>
-                </div>
+                <div class="stat-box"><span class="stat-label">Solde actuel</span><span class="stat-value" id="stat-balance">10.00 €</span></div>
+                <div class="stat-box"><span class="stat-label">Mises totales</span><span class="stat-value" id="stat-wager">0.00 €</span></div>
+                <div class="stat-box"><span class="stat-label">Plus gros gain</span><span class="stat-value" id="stat-biggest" style="color: var(--accent);">0.00 €</span></div>
+                <div class="stat-box"><span class="stat-label">🔥 Meilleur jeu</span><span class="stat-value" id="stat-best">-</span></div>
+                <div class="stat-box"><span class="stat-label">📉 Pire jeu</span><span class="stat-value" id="stat-worst">-</span></div>
+                <div class="stat-box"><span class="stat-label">🔄 Recommencé</span><span class="stat-value" id="stat-resets">0 fois</span></div>
             </div>
         </div>
     </div>
 
-    <!-- MODALE GAME OVER -->
+    <!-- GAME OVER MODAL -->
     <div id="game-over-modal" style="display: none;">
         <div class="game-over-content">
             <h1>BANKRUPT</h1>
-            <p>Vous n'avez plus de fonds.</p>
-            <button class="btn-reset" onclick="resetApp()">RECOMMENCER</button>
+            <p>Fonds épuisés. La banque gagne toujours.</p>
+            <button class="btn-reset" onclick="resetApp()">RECOMMENCER (+10.00 €)</button>
         </div>
     </div>
 
